@@ -1,8 +1,9 @@
 <?php
 require_once 'database.php';
 
-$room_id = $_GET['price'];
+$room_id = $_GET['id'];
 $room = getOneRoom($room_id);
+
 
 require_once 'layout/header.php';
 ?>
@@ -16,9 +17,13 @@ require_once 'layout/header.php';
         <div class="room-description-images">
             <img src="uploads/<?= $room->getPicture(); ?>" class="img-responsive" alt="<?= $room->getName(); ?>">
             <!-- TODO: Afficher la liste des images secondaires associées à une chambre -->
-            <img src="uploads/room2-1.jpeg" class="img-responsive" alt="Appartement standard">
+
+            <?php foreach ($room->getPicture() as $picture) : ?>
+                <img src="uploads/<?= $picture->getFileName(); ?>" class="img-responsive" alt="Appartement standard">
+            <?php endforeach; ?>
             <img src="uploads/room2-2.jpeg" class="img-responsive" alt="Appartement standard">
         </div>
+
         <div class="room-description-content">
             <h1><?= $room->getName(); ?></h1>
             <ul class="room-features">
@@ -29,6 +34,9 @@ require_once 'layout/header.php';
             </ul>
             <p><?= $room->getDescription(); ?></p>
             <!-- TODO: Afficher la liste des équipements associés à la chambre affichée. -->
+            <?php foreach ($room->getAmenities() as $amenity) : ?>
+                <p> <?= $amenity->getName(); ?> </p>
+            <?php endforeach; ?>
         </div>
     </article>
 </section>
