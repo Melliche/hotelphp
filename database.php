@@ -36,8 +36,10 @@ function getAllRooms() {
             category.name AS category_name
         FROM room
         INNER JOIN category ON room.category_id = category.id;
+        
     ";
 
+    // ORDER BY room.price ASC
     $stmt = $connection->prepare($query);
     $stmt->execute();
 
@@ -78,8 +80,11 @@ function getOneRoom(int $id) {
         FROM room
         INNER JOIN category ON room.category_id = category.id
         WHERE room.id = :id;
+        
     ";
 
+    // INNER JOIN category ON room.category_id = category.id
+    // WHERE room.id = :id;
     $stmt = $connection->prepare($query);
     $stmt->bindValue(':id', $id);
     $stmt->execute();
